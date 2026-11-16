@@ -261,6 +261,20 @@ html[lang="bn"] .hero h1 span{padding:.04em 0}
 .q:hover{color:var(--accent)}.q:hover svg{transform:translateX(4px)}
 html[lang="bn"] *{font-family:"Li Ador Noirrit","Work Sans",sans-serif!important}
 html[lang="bn"] .sv h3{font-stretch:100%;font-weight:700}
+@media (max-width:900px){.hero-row,.two{grid-template-columns:1fr}.btns{justify-content:flex-start}.about{grid-template-columns:1fr}}
+@media (min-width:901px){
+.hero{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,.8fr);grid-template-areas:"name photo" "info photo" "tools photo";column-gap:2rem;align-items:center;padding-top:2rem}
+.hero-top{display:contents}
+.hero h1{grid-area:name;align-self:end}
+.me{grid-area:photo;justify-self:end;align-self:center;width:min(100%,460px);max-width:none}
+.hero-row{grid-area:info;grid-template-columns:1fr;gap:1.4rem;margin-top:1.6rem}
+.hero-row .btns{justify-content:flex-start}
+.toolbar{grid-area:tools;justify-self:start;margin-top:1.8rem}
+.hb{top:8%;width:min(34vw,480px)}}
+.lang button{padding:.55rem 1rem}
+.q{padding:.65rem 0}
+nav a{display:inline-block;padding:.5rem .2rem}
+@media (max-width:600px){nav a{min-width:44px;text-align:center;padding:.6rem .2rem}}
 </style>
 </head>
 <body>
