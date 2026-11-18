@@ -18,6 +18,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=Work+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<script>document.documentElement.classList.add("splashing")</script>
+<noscript><style>.splash{display:none!important}</style></noscript>
 <style>
 :root{--bg:#000;--surface:#0B0B0B;--ink:#F4F1EA;--muted:#A3A09A;--line:#26231B;--accent:#F5B301;--on-accent:#000;--hot:#FFC93C;color-scheme:dark;
 box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
@@ -389,9 +391,29 @@ html[lang="bn"] .facts-row .k{font-size:.88rem}
 .logos .lg img{max-width:100%;max-height:100%}
 .logos .mt{gap:1rem;padding-right:1rem}
 @media (max-width:600px){.logos .lg{flex-basis:78px;width:78px;height:78px;padding:11px}.logos .mt{gap:.7rem;padding-right:.7rem}}
+.splash{position:fixed;inset:0;z-index:9999;display:grid;place-items:center;text-align:center;padding:2rem;background:radial-gradient(60% 50% at 50% 46%,rgba(245,179,1,.14),transparent 70%),#000;transition:opacity .8s ease,transform .8s ease,filter .8s ease,visibility 0s .8s}
+.splash.out{opacity:0;visibility:hidden;transform:scale(1.04);filter:blur(6px);pointer-events:none}
+.sp-in{display:flex;flex-direction:column;align-items:center}
+.sp-greet{font:400 clamp(2.6rem,10.5vw,8rem)/1.05 "The Last Trunks","Archivo",Arial,sans-serif;text-transform:uppercase;letter-spacing:.01em}
+.sp-greet .w{display:inline-block;opacity:0;transform:translateY(45%) skewY(4deg);background:linear-gradient(100deg,#FFF7E0,#F3ECD9 45%,#BDB9AF);-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent;animation:spw .9s cubic-bezier(.2,.8,.2,1) .15s forwards}
+.sp-greet .w+.w{animation-delay:.3s}
+@keyframes spw{to{opacity:1;transform:none}}
+.sp-line{width:min(52vw,280px);height:26px;margin-top:.8rem;fill:none;stroke:#F5B301;stroke-width:5;stroke-linecap:round;stroke-dasharray:1;stroke-dashoffset:1;animation:swd 1s cubic-bezier(.2,.8,.2,1) .8s forwards}
+.sp-sub{margin:1rem 0 0;font:500 clamp(1.05rem,2.8vw,1.5rem) "Work Sans",sans-serif;letter-spacing:.08em;color:var(--muted);opacity:0;transform:translateY(12px);animation:sps .7s ease 1.1s forwards}
+@keyframes sps{to{opacity:1;transform:none}}
+html.splashing .wrap *,html.splashing .wrap *::before,html.splashing .wrap *::after,html.splashing .wa-fab{animation-play-state:paused!important}
+@media (prefers-reduced-motion:reduce){.splash,.splash *{animation:none!important;transition:none!important}.sp-greet .w,.sp-sub{opacity:1!important;transform:none!important}.sp-line{stroke-dashoffset:0!important}}
+@media (max-width:600px){.sp-greet{font-size:15vw}}
 </style>
 </head>
 <body>
+<div class="splash" id="splash" role="status" aria-label="Assalamu Alaikum. Peace be upon you.">
+<div class="sp-in">
+<div class="sp-greet"><span class="w">Assalamu</span> <span class="w">Alaikum</span></div>
+<svg class="sp-line" viewBox="0 0 420 36" preserveAspectRatio="none" aria-hidden="true"><path pathLength="1" d="M4 28C110 2 262 38 416 6"/></svg>
+<p class="sp-sub">Peace be upon you</p>
+</div>
+</div>
 <div class="wrap">
 <nav><b>Misbaur Rahman</b><span class="lang" role="group" aria-label="Language"><button type="button" data-l="en" aria-pressed="true">EN</button><button type="button" data-l="bn" aria-pressed="false">বাংলা</button></span><div><a href="#work">Work</a><a href="#services">Services</a><a href="#about">About</a><a href="#contact">Contact</a></div></nav>
 
@@ -535,6 +557,15 @@ function updateCnt(){var g=document.getElementById("grid"),c=g&&g.querySelector(
 var st=c.offsetWidth+(parseFloat(getComputedStyle(g).columnGap)||0),n=g.children.length,mx=g.scrollWidth-g.clientWidth,i=g.scrollLeft>=mx-4?n:Math.min(n,Math.round(g.scrollLeft/st)+1);
 var f=function(x){x=("0"+x).slice(-2);return lang==="bn"?toBn(x):x};el.textContent=f(i)+" / "+f(n)}
 document.getElementById("grid").addEventListener("scroll",updateCnt,{passive:true});window.addEventListener("resize",updateCnt);
+
+(function(){var sp=document.getElementById("splash"),root=document.documentElement,wrap=document.querySelector(".wrap"),fab=document.querySelector(".wa-fab"),done=false,t;
+if(!sp)return;
+function lock(v){try{wrap.inert=v;if(fab)fab.inert=v}catch(e){}document.body.style.overflow=v?"hidden":""}
+function end(){if(done)return;done=true;clearTimeout(t);sp.classList.add("out");root.classList.remove("splashing");lock(false);setTimeout(function(){sp.remove()},1000)}
+lock(true);t=setTimeout(end,rm?1800:2500);
+["click","touchstart"].forEach(function(e){sp.addEventListener(e,end,{passive:true})});
+document.addEventListener("keydown",function(e){if(e.key==="Escape"||e.key==="Enter"||e.key===" ")end()});
+setTimeout(end,8000)})();
 </script>
 </body>
 </html>
